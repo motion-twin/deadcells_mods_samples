@@ -1,6 +1,4 @@
-var exitInBranch;
 function buildMainRooms(){
-    exitInBranch = Random.isBelow(0.7);
     Struct.createRoomWithType("Entrance").setName("start")
         .chain(Struct.createSpecificRoom("BossBeholder")).setName("end")
         .chain(Struct.createSpecificExit("T_AncientTemple", "BossBeholderExit"))
