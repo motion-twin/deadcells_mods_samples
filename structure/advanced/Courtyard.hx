@@ -1,35 +1,35 @@
 function buildMainRooms(){
     Struct.createSpecificRoom("CEntrance").addFlag(RoomFlag.Outside).setName("start")
-            .chain( Struct.createSpecificExit("MySecondLevel", "CEndExit").addFlag(RoomFlag.Outside).setName("MySecondLevel") )
+            .chain( Struct.createSpecificExit("T_Roof", "CEndExit").addFlag(RoomFlag.Outside) )
 			.chain( Struct.createSpecificRoom("CTeleportGate") )
-			.chain( Struct.createSpecificExit("MyThirdLevel", "COssuaryExit").setName("MyThirdLevel") );
+			.chain( Struct.createSpecificExit("T_Ossuary", "COssuaryExit"));
 
-    Struct.createShop(MerchantType.Weapons).branchBetween("start", "MySecondLevel");
-	Struct.createShop(MerchantType.Actives).setName("shop2").branchBetween("start", "MyThirdLevel");
+    Struct.createShop(MerchantType.Weapons).branchBetween("start", "T_Roof");
+	Struct.createShop(MerchantType.Actives).setName("shop2").branchBetween("start", "T_Ossuary");
     Struct.createRoomWithType("TeleportGate").addBefore("shop2");
 
-    Struct.createRoomWithTypeFromGroup("DualTreasure", "DualTreasureOutside").addFlag(RoomFlag.Outside).addBetween("start", "MySecondLevel", 2);
+    Struct.createRoomWithTypeFromGroup("DualTreasure", "DualTreasureOutside").addFlag(RoomFlag.Outside).addBetween("start", "T_Roof", 2);
 
     if( Random.isBelow(0.3) ){
-        Struct.createRoomWithTypeFromGroup("HealPotion", "Courtyard").addFlag(RoomFlag.Outside).addBetween("start", "MySecondLevel");
+        Struct.createRoomWithTypeFromGroup("HealPotion", "Courtyard").addFlag(RoomFlag.Outside).addBetween("start", "T_Roof");
     }
 
     if( Random.isBelow(0.1) ){
-        Struct.createRoomWithTypeFromGroup("CursedTreasure", "Courtyard").addFlag(RoomFlag.Outside).addBetween("start", "MySecondLevel");
+        Struct.createRoomWithTypeFromGroup("CursedTreasure", "Courtyard").addFlag(RoomFlag.Outside).addBetween("start", "T_Roof");
     }
 
     if( Random.isBelow(0.2) ){
-        Struct.createRoomWithType("Treasure").branchBetween("start", "MySecondLevel");
+        Struct.createRoomWithType("Treasure").branchBetween("start", "T_Roof");
     }
 
     Struct.createSpecificRoom("CLadderGate").setName("cliff")
-        .addBetween("start", "MySecondLevel", 2)
+        .addBetween("start", "T_Roof", 2)
         .addZChild(Struct.createSpecificRoom("CLadderGateKey") );
 
-    Struct.createExit("MyFourthLevel").branchBetween("cliff", "MySecondLevel").setName("MyFourthLevel");
-    Struct.createRoomWithType("WallJumpGate").addBefore("MyFourthLevel");
+    Struct.createExit("T_PrisonDepths").branchBetween("cliff", "T_Roof");
+    Struct.createRoomWithType("WallJumpGate").addBefore("T_PrisonDepths");
 
-    var exit = Struct.getRoomByName("MySecondLevel");
+    var exit = Struct.getRoomByName("T_Roof");
     var undergrounds = Struct.allRooms.filter(function(_room) return _room != exit && _room.isMainLevel() && !_room.isParentOf(exit) && !_room.isChildOf(exit));
     Struct.createRunicZDoor(Struct.createShop(), 1, undergrounds);
     Struct.createRunicZDoor(Struct.createRoomWithType("CellTreasure"), 2, undergrounds);
@@ -38,8 +38,7 @@ function buildMainRooms(){
 }
 
 function buildSecondaryRooms(){
-    trace("buildSecondaryRooms");
-    var exit = Struct.getRoomByName("MySecondLevel");
+    var exit = Struct.getRoomByName("T_Roof");
     var mains = Struct.allRooms.filter(function(_room) return _room.parent != null && _room != exit && _room.isMainLevel() && _room.isParentOf(exit) && _room.childrenCount > 1);
     var mainsCopy = mains.copy();
     for(i in 0...4){
@@ -49,7 +48,7 @@ function buildSecondaryRooms(){
         Struct.createRoomWithTypeFromGroup("Combat", "Courtyard").addFlag(RoomFlag.Outside).addBefore(Random.arraySplice(mainsCopy).getName());
     }
 
-    Struct.createRoomWithTypeFromGroup("Combat", "Courtyard").addFlag(RoomFlag.Outside).addBefore("MySecondLevel");
+    Struct.createRoomWithTypeFromGroup("Combat", "Courtyard").addFlag(RoomFlag.Outside).addBefore("T_Roof");
     Struct.createRoomWithTypeFromGroup("Combat", "NeedStompOutside").addFlag(RoomFlag.Outside).addBefore(Random.arrayPick(mains).getName());
 
     //Outside traps
@@ -72,7 +71,7 @@ function buildSecondaryRooms(){
 }
 
 function addTeleports(){
-    var exit = Struct.getRoomByName("MySecondLevel");
+    var exit = Struct.getRoomByName("T_Roof");
     var rooms = Struct.allRooms.filter(function(_room) return _room.isMainLevel() );
 
     //Turn crosses into teleports
@@ -97,7 +96,7 @@ function addTeleports(){
     }
 
     //Dead Ends
-    var secondExit = Struct.getRoomByName("MyThirdLevel");
+    var secondExit = Struct.getRoomByName("T_Ossuary");
     for( room in rooms ){
         if( room.childrenCount == 0 && room != secondExit && room.calcTypeDistance("Teleport", true) > 1 ){
             Struct.createRoomWithType("Teleport").addBefore(room.getName());
@@ -134,7 +133,7 @@ function buildTimedDoors(){
 }
 
 function finalize(){
-    var exit = Struct.getRoomByName("MySecondLevel");
+    var exit = Struct.getRoomByName("T_Roof");
 
     //Update outside corridors
     for( room in Struct.allRooms ){
