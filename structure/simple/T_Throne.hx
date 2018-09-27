@@ -16,6 +16,6 @@ function setLevelInfo(_levelInfo){
     setLevelInfoFrom("T_Throne", _levelInfo); 
 }
 
-function SetLevelProps(_levelProps){
+function setLevelProps(_levelProps){
     setLevelPropsFrom("T_Throne", _levelProps);
 }

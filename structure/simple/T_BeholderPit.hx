@@ -16,7 +16,7 @@ function setLevelInfo(_levelInfo){
     setLevelInfoFrom("T_BeholderPit", _levelInfo); 
 }
 
-function SetLevelProps(_levelProps){
+function setLevelProps(_levelProps){
     setLevelPropsFrom("T_BeholderPit", _levelProps);
 }
 

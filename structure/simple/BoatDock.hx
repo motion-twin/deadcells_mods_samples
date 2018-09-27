@@ -15,7 +15,7 @@ function setLevelInfo(_levelInfo){
 }
 
 
-function SetLevelProps(_levelProps){
+function setLevelProps(_levelProps){
     setLevelPropsFrom("BoatDock", _levelProps);
 }
 

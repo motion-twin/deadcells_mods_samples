@@ -24,7 +24,7 @@ function setLevelInfo(_levelInfo){
     setLevelInfoFrom("T_AfterBridge", _levelInfo); 
 }
 
-function SetLevelProps(_levelProps){
+function setLevelProps(_levelProps){
     setLevelPropsFrom("T_AfterBridge", _levelProps);
 }
 

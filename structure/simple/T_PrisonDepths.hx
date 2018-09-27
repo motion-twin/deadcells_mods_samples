@@ -16,7 +16,7 @@ function setLevelInfo(_levelInfo){
     setLevelInfoFrom("T_PrisonDepths", _levelInfo); 
 }
 
-function SetLevelProps(_levelProps){
+function setLevelProps(_levelProps){
     setLevelPropsFrom("T_PrisonDepths", _levelProps);
 }
 
