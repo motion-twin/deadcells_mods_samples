@@ -1,4 +1,3 @@
-var exits : Array<String>;
 function buildMainRooms(){
     Struct.createSpecificRoom("SewerShortEntrance").setName("start")
         .chain(Struct.createCross("exitCross"))
