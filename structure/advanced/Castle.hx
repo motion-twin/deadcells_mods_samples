@@ -80,7 +80,7 @@ function createHallway(_entrance : RoomNode, _exit : RoomNode){
     //pick biome
     var biome = hallwayBiome.shift();
     hallwayBiome.push(biome);
-    start.forceCastleBiome(biome);
+    start.forceBiome(biome);
 
     //add mini boss
     switch( biome ){
